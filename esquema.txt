@@ -1,0 +1,68 @@
+nestjs-ms-keycloak-redis-gql-mongo/
+│
+├─ docker-compose.yml
+├─ .env.example
+├─ package.json
+├─ tsconfig.json
+├─ README.md
+│
+├─ apps/
+│   ├─ api-gateway/
+│   │   ├─ src/
+│   │   │   ├─ main.ts
+│   │   │   ├─ app.module.ts
+│   │   │   ├─ graphql/
+│   │   │   │   ├─ schema.gql
+│   │   │   │   └─ resolvers/
+│   │   │   ├─ modules/
+│   │   │   │   └─ users/
+│   │   │   │       ├─ users.module.ts
+│   │   │   │       ├─ users.resolver.ts
+│   │   │   │       └─ users.service.ts
+│   │   │   └─ common/
+│   │   │       ├─ guards/
+│   │   │       └─ interceptors/
+│   │   └─ Dockerfile
+│   │
+│   ├─ users-service/
+│   │   ├─ src/
+│   │   │   ├─ main.ts
+│   │   │   ├─ app.module.ts
+│   │   │   ├─ users/
+│   │   │   │   ├─ users.module.ts
+│   │   │   │   ├─ users.service.ts
+│   │   │   │   └─ users.schema.ts
+│   │   │   └─ common/
+│   │   │       └─ redis/
+│   │   │           └─ redis.module.ts
+│   │   └─ Dockerfile
+│   │
+│   └─ auth-service/
+│       ├─ src/
+│       │   ├─ main.ts
+│       │   ├─ app.module.ts
+│       │   └─ auth/
+│       │       ├─ auth.module.ts
+│       │       └─ keycloak.strategy.ts
+│       └─ Dockerfile
+│
+├─ libs/
+│   └─ common/
+│       ├─ decorators/
+│       ├─ interfaces/
+│       └─ utils/
+│
+└─ node_modules/
+
+
+Logs centralizados (Winston + Elasticsearch)
+
+Observabilidad (Prometheus + Grafana)
+
+Validación de entradas (class-validator)
+
+Cache de Redis para queries frecuentes
+
+Roles dinámicos con Keycloak
+
+Versionado de APIs y GraphQL

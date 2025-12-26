@@ -1,0 +1,8 @@
+{
+    "folder-color.pathColors": [
+        {
+            "folderPath": "nestjs-ms-keycloak-redis-gql-mongo\\dist\\apps\\auth-service\\",
+            "color": "foldercolorizer.color_00cc33"
+        }
+    ]
+}
