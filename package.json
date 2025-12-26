@@ -1,0 +1,46 @@
+{
+  "name": "nestjs-ms-keycloak-redis-gql-mongo",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:gateway": "nest start api-gateway --watch",
+    "dev:users": "nest start users-service --watch",
+    "dev:auth": "nest start auth-service --watch",
+    "dev:menus": "nest start menus-service --watch",
+    "dev:products": "nest start products-service --watch",
+    "dev:all": "concurrently \"npm:dev:gateway\" \"npm:dev:users\" \"npm:dev:auth\" \"npm:dev:menus\" \"npm:dev:products\"",
+    "build": "nest build --all",
+    "start": "node dist/apps/api-gateway/main.js"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.0.0",
+    "concurrently": "^8.2.2",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.12.2",
+    "@nestjs/apollo": "^12.2.0",
+    "@nestjs/axios": "^4.0.1",
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.0.0",
+    "@nestjs/core": "^10.0.0",
+    "@nestjs/graphql": "^12.0.0",
+    "@nestjs/microservices": "^10.0.0",
+    "@nestjs/mongoose": "^10.0.1",
+    "@nestjs/platform-express": "^10.0.0",
+    "axios": "^1.11.0",
+    "cache-manager": "^5.4.0",
+    "cache-manager-redis-yet": "^5.1.5",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "graphql": "^16.11.0",
+    "graphql-type-json": "^0.3.2",
+    "ioredis": "^5.3.2",
+    "jwt-decode": "^4.0.0",
+    "keycloak-connect": "^25.0.0",
+    "mongoose": "^8.3.5",
+    "nest-keycloak-connect": "^1.10.1"
+  }
+}

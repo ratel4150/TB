@@ -26,6 +26,20 @@
       "entryFile": "main",
       "sourceRoot": "apps/auth-service/src",
       "compilerOptions": { "tsConfigPath": "apps/auth-service/tsconfig.app.json" }
+    },
+        "menus-service": {
+      "type": "application",
+      "root": "apps/menus-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/menus-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/menus-service/tsconfig.app.json" }
+    },
+        "products-service": {
+      "type": "application",
+      "root": "apps/products-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/products-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/products-service/tsconfig.app.json" }
     }
   }
 }

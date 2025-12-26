@@ -14,9 +14,10 @@ const config_1 = require("@nestjs/config");
 const microservices_1 = require("@nestjs/microservices");
 const redis_config_1 = require("./config/redis.config");
 const nest_keycloak_connect_1 = require("nest-keycloak-connect");
-const core_1 = require("@nestjs/core");
 const user_resolver_1 = require("./graphql/resolvers/user.resolver");
 const auth_resolver_1 = require("./graphql/resolvers/auth.resolver");
+const menu_resolver_1 = require("./graphql/resolvers/menu.resolver");
+const product_resolver_1 = require("./graphql/resolvers/product.resolver");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -33,6 +34,8 @@ exports.AppModule = AppModule = __decorate([
             microservices_1.ClientsModule.register([
                 { name: 'USERS_SERVICE', ...redis_config_1.redisClientOptions },
                 { name: 'AUTH_SERVICE', ...redis_config_1.redisClientOptions },
+                { name: 'MENUS_SERVICE', ...redis_config_1.redisClientOptions },
+                { name: 'PRODUCTS_SERVICE', ...redis_config_1.redisClientOptions },
             ]),
             nest_keycloak_connect_1.KeycloakConnectModule.registerAsync({
                 useFactory: () => ({
@@ -44,10 +47,7 @@ exports.AppModule = AppModule = __decorate([
             }),
         ],
         providers: [
-            user_resolver_1.UserResolver, auth_resolver_1.AuthResolver,
-            { provide: core_1.APP_GUARD, useClass: nest_keycloak_connect_1.AuthGuard },
-            { provide: core_1.APP_GUARD, useClass: nest_keycloak_connect_1.ResourceGuard },
-            { provide: core_1.APP_GUARD, useClass: nest_keycloak_connect_1.RoleGuard },
+            user_resolver_1.UserResolver, auth_resolver_1.AuthResolver, menu_resolver_1.MenuResolver, product_resolver_1.ProductResolver,
         ],
     })
 ], AppModule);

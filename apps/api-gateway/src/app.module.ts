@@ -9,7 +9,9 @@ import { APP_GUARD } from '@nestjs/core';
 import { UserResolver } from './graphql/resolvers/user.resolver';
 import { IncomingMessage } from 'http';
 import { AuthResolver } from './graphql/resolvers/auth.resolver';
-
+import { MenuResolver } from './graphql/resolvers/menu.resolver';
+import { ProductResolver } from './graphql/resolvers/product.resolver';
+  
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -22,6 +24,8 @@ import { AuthResolver } from './graphql/resolvers/auth.resolver';
     ClientsModule.register([
       { name: 'USERS_SERVICE', ...redisClientOptions },
       { name: 'AUTH_SERVICE', ...redisClientOptions },
+      { name: 'MENUS_SERVICE', ...redisClientOptions }, // 👈 añadimos el MENUS_SERVICE
+       { name: 'PRODUCTS_SERVICE', ...redisClientOptions }, // 👈 AQUÍ SE AGREGA
     ]),
     KeycloakConnectModule.registerAsync({
       useFactory: () => ({
@@ -33,10 +37,10 @@ import { AuthResolver } from './graphql/resolvers/auth.resolver';
     }),
   ],
   providers: [
-    UserResolver,  AuthResolver,
-    { provide: APP_GUARD, useClass: AuthGuard },
+    UserResolver,  AuthResolver, MenuResolver,   ProductResolver, // 👈 AGREGADO
+  /*   { provide: APP_GUARD, useClass: AuthGuard },
     { provide: APP_GUARD, useClass: ResourceGuard },
-    { provide: APP_GUARD, useClass: RoleGuard },
+    { provide: APP_GUARD, useClass: RoleGuard }, */
   ],
 })
 export class AppModule {}
