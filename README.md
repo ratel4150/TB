@@ -144,12 +144,184 @@ monolíticas tradicionales.
 <hr/>
 
 <h2>8️⃣ Estado del Arte</h2>
+
+<p>
+El estado del arte en arquitecturas backend ha evolucionado significativamente
+en las últimas dos décadas, impulsado por el crecimiento de aplicaciones web,
+la necesidad de alta disponibilidad y la adopción de infraestructuras cloud.
+A continuación, se analizan los principales enfoques arquitectónicos utilizados
+en sistemas backend, destacando sus fortalezas, limitaciones y aplicabilidad
+en contextos empresariales modernos.
+</p>
+
+<h3>8.1 Arquitectura Monolítica</h3>
+<p>
+La arquitectura monolítica representa el enfoque tradicional en el desarrollo
+de aplicaciones backend. En este modelo, toda la lógica de negocio, acceso a datos,
+autenticación y presentación se despliegan como una única unidad.
+</p>
+
+<p><strong>Ventajas:</strong></p>
+<ul>
+  <li>Simplicidad conceptual y de despliegue</li>
+  <li>Bajo costo inicial de desarrollo</li>
+  <li>Facilidad de depuración en sistemas pequeños</li>
+</ul>
+
+<p><strong>Limitaciones:</strong></p>
+<ul>
+  <li>Escalabilidad limitada (escalado vertical)</li>
+  <li>Alto acoplamiento entre módulos</li>
+  <li>Dificultad para incorporar nuevos equipos</li>
+  <li>Riesgo elevado ante fallos (single point of failure)</li>
+</ul>
+
+<p>
+Este enfoque resulta adecuado únicamente para aplicaciones pequeñas o prototipos,
+pero se vuelve insostenible en escenarios empresariales de alta demanda.
+</p>
+
+<hr/>
+
+<h3>8.2 Arquitectura SOA / REST</h3>
+<p>
+La arquitectura orientada a servicios (SOA) y su implementación moderna mediante
+APIs REST surgieron como respuesta a las limitaciones del monolito. Este enfoque
+introduce separación lógica de servicios y contratos bien definidos mediante HTTP.
+</p>
+
+<p><strong>Ventajas:</strong></p>
+<ul>
+  <li>Separación parcial de responsabilidades</li>
+  <li>Interoperabilidad entre sistemas heterogéneos</li>
+  <li>Facilidad de adopción y estandarización</li>
+</ul>
+
+<p><strong>Limitaciones:</strong></p>
+<ul>
+  <li>Over-fetching y under-fetching de datos</li>
+  <li>Dependencia fuerte del versionado de APIs</li>
+  <li>Latencia acumulada en llamadas encadenadas</li>
+  <li>Dificultad para evolucionar contratos sin impacto</li>
+</ul>
+
+<p>
+Aunque REST/SOA representa una mejora significativa frente al monolito,
+su enfoque sincrónico y su rigidez contractual presentan desafíos en
+sistemas altamente distribuidos.
+</p>
+
+<hr/>
+
+<h3>8.3 Arquitectura de Microservicios</h3>
+<p>
+La arquitectura de microservicios propone la división del sistema en servicios
+autónomos, desplegables de forma independiente y alineados a dominios de negocio.
+Cada servicio gestiona su propia lógica y persistencia.
+</p>
+
+<p><strong>Ventajas:</strong></p>
+<ul>
+  <li>Escalabilidad horizontal real</li>
+  <li>Despliegue independiente</li>
+  <li>Alineación con Domain-Driven Design (DDD)</li>
+  <li>Alta resiliencia y tolerancia a fallos</li>
+</ul>
+
+<p><strong>Desafíos:</strong></p>
+<ul>
+  <li>Complejidad operativa</li>
+  <li>Gestión de consistencia eventual</li>
+  <li>Necesidad de observabilidad avanzada</li>
+</ul>
+
+<p>
+Este enfoque se ha consolidado como el estándar en arquitecturas cloud-native
+y sistemas empresariales de gran escala.
+</p>
+
+<hr/>
+
+<h3>8.4 Microservicios con GraphQL como API Gateway</h3>
+<p>
+La integración de GraphQL como API Gateway representa una evolución del modelo
+de microservicios tradicionales. En este enfoque, GraphQL actúa como punto único
+de entrada, orquestando llamadas a múltiples microservicios.
+</p>
+
+<p><strong>Ventajas Clave:</strong></p>
+<ul>
+  <li>Eliminación de over-fetching y under-fetching</li>
+  <li>Contratos flexibles y tipados</li>
+  <li>Versionado implícito del esquema</li>
+  <li>Mejor experiencia para consumidores de la API</li>
+</ul>
+
+<p><strong>Trade-offs:</strong></p>
+<ul>
+  <li>Mayor complejidad inicial</li>
+  <li>Necesidad de control de performance y caching</li>
+  <li>Requiere madurez arquitectónica</li>
+</ul>
+
+<hr/>
+
+<h3>8.5 Comparativa Global de Enfoques</h3>
+
 <table>
-<tr><th>Arquitectura</th><th>Escalabilidad</th><th>Complejidad</th></tr>
-<tr><td>Monolito</td><td>Baja</td><td>Baja</td></tr>
-<tr><td>REST SOA</td><td>Media</td><td>Media</td></tr>
-<tr><td>Microservicios + GraphQL</td><td>Alta</td><td>Alta</td></tr>
+  <tr>
+    <th>Arquitectura</th>
+    <th>Escalabilidad</th>
+    <th>Mantenibilidad</th>
+    <th>Complejidad Operativa</th>
+    <th>Adecuación Enterprise</th>
+  </tr>
+  <tr>
+    <td>Monolito</td>
+    <td>Baja</td>
+    <td>Baja</td>
+    <td>Baja</td>
+    <td>Baja</td>
+  </tr>
+  <tr>
+    <td>REST / SOA</td>
+    <td>Media</td>
+    <td>Media</td>
+    <td>Media</td>
+    <td>Media</td>
+  </tr>
+  <tr>
+    <td>Microservicios</td>
+    <td>Alta</td>
+    <td>Alta</td>
+    <td>Alta</td>
+    <td>Alta</td>
+  </tr>
+  <tr>
+    <td>Microservicios + GraphQL</td>
+    <td>Muy Alta</td>
+    <td>Muy Alta</td>
+    <td>Alta</td>
+    <td>Muy Alta</td>
+  </tr>
 </table>
+
+<hr/>
+
+<h3>8.6 Posicionamiento de la Arquitectura Propuesta</h3>
+<p>
+La arquitectura presentada en este documento se posiciona dentro del enfoque
+de microservicios con GraphQL como API Gateway, complementado con mecanismos
+de mensajería asincrónica, control de acceso enterprise y observabilidad
+integrada.
+</p>
+
+<p>
+Este enfoque resulta especialmente adecuado para sistemas empresariales
+con alta demanda de escalabilidad, múltiples equipos de desarrollo y
+requisitos estrictos de seguridad.
+</p>
+
 
 <hr/>
 
