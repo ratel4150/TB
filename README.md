@@ -364,12 +364,199 @@ requisitos estrictos de seguridad.
 <hr/>
 
 <h2>1️⃣2️⃣ Decisiones Arquitectónicas (ADR)</h2>
-<table>
-<tr><th>Decisión</th><th>Alternativas</th><th>Justificación</th></tr>
-<tr><td>GraphQL</td><td>REST</td><td>Evita over-fetching</td></tr>
-<tr><td>Keycloak</td><td>Auth propio</td><td>RBAC enterprise</td></tr>
-<tr><td>Redis</td><td>HTTP sync</td><td>Baja latencia</td></tr>
-</table>
+
+<p>
+Las Architecture Decision Records (ADR) documentan las decisiones técnicas
+fundamentales adoptadas durante el diseño del sistema. Cada ADR describe
+el contexto del problema, las alternativas evaluadas, la decisión tomada
+y las consecuencias a corto y largo plazo.
+</p>
+
+<hr/>
+
+<h3>ADR-001: Uso de GraphQL como API Gateway</h3>
+
+<p><strong>Contexto</strong></p>
+<p>
+El sistema requiere un punto único de entrada capaz de orquestar múltiples
+microservicios, minimizar la sobrecarga de red y permitir la evolución de
+los contratos de forma no disruptiva.
+</p>
+
+<p><strong>Alternativas Evaluadas</strong></p>
+<ul>
+  <li>APIs REST tradicionales</li>
+  <li>BFF (Backend for Frontend)</li>
+  <li>GraphQL Gateway</li>
+</ul>
+
+<p><strong>Decisión</strong></p>
+<p>
+Se adopta GraphQL como API Gateway central, actuando como capa de
+orquestación y agregación de datos.
+</p>
+
+<p><strong>Justificación</strong></p>
+<ul>
+  <li>Elimina over-fetching y under-fetching</li>
+  <li>Permite contratos tipados y auto-documentados</li>
+  <li>Facilita evolución incremental del esquema</li>
+  <li>Mejora la experiencia del consumidor</li>
+</ul>
+
+<p><strong>Consecuencias</strong></p>
+<ul>
+  <li>Mayor complejidad inicial</li>
+  <li>Necesidad de control de performance y caching</li>
+  <li>Requiere madurez arquitectónica y observabilidad</li>
+</ul>
+
+<hr/>
+
+<h3>ADR-002: Uso de Keycloak como Proveedor de Identidad</h3>
+
+<p><strong>Contexto</strong></p>
+<p>
+El sistema requiere autenticación centralizada, control de acceso basado
+en roles y compatibilidad con estándares de identidad enterprise.
+</p>
+
+<p><strong>Alternativas Evaluadas</strong></p>
+<ul>
+  <li>Autenticación propia (custom JWT)</li>
+  <li>Servicios externos (Auth0, Cognito)</li>
+  <li>Keycloak (self-hosted)</li>
+</ul>
+
+<p><strong>Decisión</strong></p>
+<p>
+Se adopta Keycloak como Identity Provider (IdP) central.
+</p>
+
+<p><strong>Justificación</strong></p>
+<ul>
+  <li>Soporte nativo para OAuth2 y OpenID Connect</li>
+  <li>Gestión avanzada de roles y permisos (RBAC)</li>
+  <li>Integración con brokers sociales y enterprise</li>
+  <li>Independencia de proveedor cloud</li>
+</ul>
+
+<p><strong>Consecuencias</strong></p>
+<ul>
+  <li>Mayor carga operativa inicial</li>
+  <li>Necesidad de hardening y backups</li>
+  <li>Curva de aprendizaje</li>
+</ul>
+
+<hr/>
+
+<h3>ADR-003: Redis como Capa de Mensajería y Cache</h3>
+
+<p><strong>Contexto</strong></p>
+<p>
+La comunicación entre microservicios debe ser rápida, desacoplada y
+tolerante a fallos, evitando dependencias sincrónicas fuertes.
+</p>
+
+<p><strong>Alternativas Evaluadas</strong></p>
+<ul>
+  <li>HTTP sincrónico</li>
+  <li>RabbitMQ / Kafka</li>
+  <li>Redis Pub/Sub</li>
+</ul>
+
+<p><strong>Decisión</strong></p>
+<p>
+Se adopta Redis como mecanismo de mensajería ligera y cache distribuido.
+</p>
+
+<p><strong>Justificación</strong></p>
+<ul>
+  <li>Latencia extremadamente baja</li>
+  <li>Simplicidad operativa</li>
+  <li>Soporte para cache y pub/sub</li>
+  <li>Ideal para workloads de lectura frecuente</li>
+</ul>
+
+<p><strong>Consecuencias</strong></p>
+<ul>
+  <li>No garantiza persistencia de mensajes</li>
+  <li>No es adecuado para eventos críticos a largo plazo</li>
+  <li>Puede requerir migración futura a Kafka</li>
+</ul>
+
+<hr/>
+
+<h3>ADR-004: Persistencia Desacoplada por Servicio</h3>
+
+<p><strong>Contexto</strong></p>
+<p>
+Cada microservicio debe evolucionar de manera independiente sin compartir
+estado interno.
+</p>
+
+<p><strong>Decisión</strong></p>
+<p>
+Cada servicio gestiona su propia base de datos.
+</p>
+
+<p><strong>Consecuencias</strong></p>
+<ul>
+  <li>Consistencia eventual</li>
+  <li>Mayor complejidad en consultas transversales</li>
+</ul>
+
+<hr/>
+
+<h2>🔮 Futuro de las Arquitecturas de Software</h2>
+
+<p>
+La arquitectura propuesta se alinea con tendencias emergentes en
+ingeniería de software empresarial.
+</p>
+
+<h3>1️⃣ Arquitecturas Event-Driven y Reactive</h3>
+<ul>
+  <li>Desacoplamiento total mediante eventos</li>
+  <li>Procesamiento asíncrono</li>
+  <li>Alta resiliencia</li>
+</ul>
+
+<h3>2️⃣ GraphQL Federation y Supergraphs</h3>
+<ul>
+  <li>Escalado de esquemas GraphQL</li>
+  <li>Equipos autónomos por dominio</li>
+  <li>Contratos evolutivos</li>
+</ul>
+
+<h3>3️⃣ Serverless y Functions-as-a-Service</h3>
+<ul>
+  <li>Escalado automático</li>
+  <li>Modelo de costos por uso</li>
+  <li>Reducción de operaciones</li>
+</ul>
+
+<h3>4️⃣ Service Mesh</h3>
+<ul>
+  <li>mTLS</li>
+  <li>Observabilidad profunda</li>
+  <li>Gestión de tráfico avanzada</li>
+</ul>
+
+<h3>5️⃣ Arquitecturas Orientadas a Dominio (DDD Estratégico)</h3>
+<ul>
+  <li>Bounded Contexts claros</li>
+  <li>Equipos alineados al negocio</li>
+  <li>Escalabilidad organizacional</li>
+</ul>
+
+<p>
+El futuro de las arquitecturas enterprise se orienta hacia sistemas
+altamente distribuidos, observables, seguros y alineados con el dominio
+del negocio, donde la complejidad se gestiona mediante automatización,
+estándares y madurez organizacional.
+</p>
+
 
 <hr/>
 
